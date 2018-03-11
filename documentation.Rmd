@@ -1,0 +1,72 @@
+---
+title: "Documentation on Shiny app"
+author: "Gregor Matheis"
+date: "March 11, 2018"
+output:
+  ioslides_presentation:
+    widescreen: true
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+
+The shiny application can be found under the link <https://gregormatheis.shinyapps.io/Data-products-week-4-shiny/>
+
+It's hosted on Shiny.IO 
+
+This document is going to show you:
+
+1. Data source
+2. Used packages
+3. Example plot and list of inputs
+
+## 1. Data source
+
+- Used dataset is from the r datasets pack
+- Used data are the swiss data
+- Data can be loaded as following
+
+```{r}
+datasets::swiss
+```
+
+## 2. Used packages
+
+Packages that are used:
+
+- Shiny
+- Tidyverse
+- Data.table
+- Datasets
+
+```{r ,warning=FALSE,  include=FALSE}
+require(Shiny)
+require(tidyverse)
+require(data.table)
+require(datasets)
+```
+Data prep:
+
+```{r}
+df<-datasets::swiss
+County<-rownames(df)
+df$County<-County
+setDT(df)
+df<-df[County %in% County[1:5]]
+```
+
+## 3. Example plot
+
+```{r warning=F}
+            ggplot(df)+
+                  geom_bar(aes(x=County,y=Education), stat = "identity")+
+                  theme_bw()
+```
+
+## Thank you
+
+Have fun trying some countys :)
